@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Система управления задачами</title>
+	<link rel="stylesheet" href="static/css/home_page.css">
+</head>
+<body>
+	<h1>Система управления задачами</h1>
+	<p>Добавить новую задачу:</p>
+	<form action="/add-task" method="post">
+		<label for="task-name">Название задачи:</label>
+		<input type="text" id="task-name" name="task-name"><br><br>
+		<label for="task-desc">Описание задачи:</label><br>
+		<textarea id="task-desc" name="task-desc"></textarea><br><br>
+		<input type="submit" value="Добавить задачу">
+	</form>
+	<br>
+	<h2>Список задач:</h2>
+	<ul>
+		{% for task in tasks %}
+			<li>
+				<h3>{{ task.name }}</h3>
+				<p>{{ task.description }}</p>
+				<form action="/edit-task/{{ task.id }}" method="post">
+					<label for="edit-name-{{ task.id }}">Название задачи:</label>
+					<input type="text" id="edit-name-{{ task.id }}" name="edit-name" value="{{ task.name }}"><br><br>
+					<label for="edit-desc-{{ task.id }}">Описание задачи:</label><br>
+					<textarea id="edit-desc-{{ task.id }}" name="edit-desc">{{ task.description }}</textarea><br><br>
+					<input type="submit" value="Сохранить изменения">
+				</form>
+				<form action="/delete-task/{{ task.id }}" method="post">
+					<input type="submit" value="Удалить задачу">
+				</form>
+			</li>
+		{% endfor %}
+	</ul>
+</body>
+</html>
