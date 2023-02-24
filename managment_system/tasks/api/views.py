@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -15,6 +15,8 @@ class TeamViewSet(viewsets.ModelViewSet):
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.select_related('creator', 'assignee')
     serializer_class = TaskSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title', 'creator__username']
 
     @receiver(post_save, sender=Task)
     def send_email_on_create(sender, instance, created, **kwargs):

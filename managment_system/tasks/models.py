@@ -13,7 +13,7 @@ class Team(models.Model):
 
 
 class Task(models.Model):
-    title = models.CharField('Название', max_length=200)
+    title = models.CharField('Название', max_length=200, db_index=True)
     description = models.TextField('Описание', blank=True, null=True)
     created_at = models.DateTimeField('Дата_создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата_последнего_обновления', auto_now=True)
